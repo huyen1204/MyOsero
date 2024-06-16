@@ -1,0 +1,155 @@
+﻿@page
+@model WebApp.Pages.Match.IndexModel
+@{
+    ViewData["Title"] = "Reversi Game";
+}
+
+<head>
+    <title>Reversi</title>
+    <style>
+        .game-body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .board-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 2px;
+            background-color: #008000;
+            border: 2px solid #006400;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            background-color: #228B22;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .cell:hover {
+            background-color: #2e8b57;
+        }
+
+        .black, .white {
+            border-radius: 50%;
+            width: 80%;
+            height: 80%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .black {
+            background-color: #000;
+        }
+
+        .white {
+            background-color: #fff;
+        }
+
+        .timer, .score {
+            text-align: center;
+            font-size: 2em;
+            margin: 0 20px;
+        }
+
+        .timer div:first-child {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .timer div:last-child {
+            font-size: 1.5em;
+            color: #111;
+        }
+
+        .timer-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head> 
+<body>
+<div class="game-body">
+    <div class="game-container">
+        @* <h1>Reversi</h1> *@
+        <div class="mt-4">
+            @if (Model.Game.IsPlayer1Turn)
+            {
+                <h3>Player 1's Turn (Dark)</h3>
+            }
+            else
+            {
+                <h3>Player 2's Turn (Light)</h3>
+            }
+        </div>
+        <div class="board-container">
+            <div class="timer-container">
+                <div class="timer">
+                    <div>Player 1</div>
+                    <div>@Model.Game.PlayerOneTime.ToString("mm\\:ss")</div>
+                    <div>@Model.Game.PlayerOneScore</div>
+                </div>
+                <div class="board">
+                    @for (int i = 0; i < 8; i++)
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                                <form method="post" asp-page-handler="MakeMove">
+                                <input type="hidden" name="row" value="@i" />
+                                <input type="hidden" name="col" value="@j" />
+                                @if (Model.Game.Board[i, j] == 1)
+                                {
+                                    <div class="black"></div>
+                                }
+                                else if (Model.Game.Board[i, j] == 2)
+                                {
+                                    <div class="white"></div>
+                                } else
+                                {
+                                    <button class="invisible-button cell @(Model.Game.Board[i, j])" type="submit"></button>
+                                }
+                            </form>
+                        }
+                    }
+                </div>
+                <div class="timer">
+                    <div>Player 2</div>
+                    <div>@Model.Game.PlayerTwoTime.ToString("mm\\:ss")</div>
+                    <div>@Model.Game.PlayerTwoScore</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
