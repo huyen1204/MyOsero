@@ -1,0 +1,176 @@
+﻿@page
+@model WebApp.Pages.Othello.HomePageModel
+@{
+    ViewData["Title"] = "User Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - My ASP.NET Application</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ccc;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .logout-container {
+            display: flex;
+            align-items: center;
+        }
+        .logout-container span {
+            margin-right: 10px;
+        }
+        main {
+            padding: 20px;
+        }
+        .top-section {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .mode-selection, .ranking {
+            flex: 1;
+            margin: 0 10px;
+        }
+        .mode-selection {
+            text-align: center;
+        }
+        .mode-button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 32px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .mode-button:hover {
+            background-color: #0056b3;
+        }
+        .history {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>個人画面</h1>
+        <div class="logout-container">
+            <span>@User.Identity.Name</span>
+            <form method="post" asp-page-handler="Logout">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="top-section">
+            <div class="mode-selection">
+                <h2>Please choose mode</h2>
+                <button id="one-player" class="mode-button">One Player</button>
+                <button id="two-player" class="mode-button">Two Player</button>
+            </div>
+            <div class="ranking">
+                <h2>Ranking</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Username</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>computer</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>user1</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>user5</td>
+                            <td>32</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+           
+        </div>
+
+        <div class="history">
+            <h2>History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Competitor</th>
+                        <th>Competitor score</th>
+                        <th>Your score</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024/06/13</td>
+                        <td>user2</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>Lose</td>
+                    </tr>
+                    <tr>
+                        <td>2024/06/13</td>
+                        <td>computer</td>
+                        <td>0</td>
+                        <td>20</td>
+                        <td>Win</td>
+                    </tr>
+                    <tr>
+                        <td>2024/06/13</td>
+                        <td>user2</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>Loss</td>
+                    </tr>
+                    <tr>
+                        <td>2024/06/13</td>
+                        <td>user5</td>
+                        <td>32</td>
+                        <td>32</td>
+                        <td>Fair</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

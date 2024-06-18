@@ -25,7 +25,7 @@ namespace WebApp.Pages.Match
         {
             _gameService.MakeMove(row, col);
             Game = _gameService.GetGame();
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

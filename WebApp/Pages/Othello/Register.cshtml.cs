@@ -15,6 +15,7 @@ namespace WebApp.Pages.Othello
 
         public IActionResult OnGet()
         {
+            string userToken = Request.Cookies["Username"];
             return Page();
         }
 
