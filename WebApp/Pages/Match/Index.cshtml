@@ -104,7 +104,7 @@
     <div class="game-container">
         @* <h1>Reversi</h1> *@
         <div class="mt-4">
-            @if (Model.Game.IsPlayer1Turn)
+            @if (Model.IsPlayer1Turn)
             {
                 <h3>Player 1's Turn (Dark)</h3>
             }
@@ -117,36 +117,43 @@
             <div class="timer-container">
                 <div class="timer">
                     <div>Player 1</div>
-                    <div>@Model.Game.PlayerOneTime.ToString("mm\\:ss")</div>
-                    <div>@Model.Game.PlayerOneScore</div>
                 </div>
-                <div class="board">
-                    @for (int i = 0; i < 8; i++)
-                    {
-                        for (int j = 0; j < 8; j++)
+                @* <div class="board"> *@
+                    <table class="board">
+                        @for (int row = 0; row < 8; row++)
                         {
-                                <form method="post" asp-page-handler="MakeMove">
-                                <input type="hidden" name="row" value="@i" />
-                                <input type="hidden" name="col" value="@j" />
-                                @if (Model.Game.Board[i, j] == 1)
+                            <tr>
+                                @for (int col = 0; col < 8; col++)
                                 {
-                                    <div class="black"></div>
+                                    var value = Model.Board[row * 8 + col];
+                                    <td>
+                                        <form method="post" asp-page-handler="MakeMove">
+                                            <input type="hidden" name="row" value="@row" />
+                                            <input type="hidden" name="col" value="@col" />
+                                            @foreach (var item in Model.Board)
+                                            {
+                                                <input type="hidden" name="Board" value="@item" />
+                                            }
+                                            <button type="submit"
+                                                    style="width: 50px; height: 50px; background-color:@(value == 1 ? "black" : value == 2 ? "white" : "gray");">
+                                                @if (value == 1)
+                                                {
+                                                    <span style="color: white;">O</span>
+                                                }
+                                                else if (value == 2)
+                                                {
+                                                    <span style="color: black;">O</span>
+                                                }
+                                            </button>
+                                        </form>
+                                    </td>
                                 }
-                                else if (Model.Game.Board[i, j] == 2)
-                                {
-                                    <div class="white"></div>
-                                } else
-                                {
-                                    <button class="invisible-button cell @(Model.Game.Board[i, j])" type="submit"></button>
-                                }
-                            </form>
+                            </tr>
                         }
-                    }
-                </div>
+                    </table>
+                @* </div> *@
                 <div class="timer">
                     <div>Player 2</div>
-                    <div>@Model.Game.PlayerTwoTime.ToString("mm\\:ss")</div>
-                    <div>@Model.Game.PlayerTwoScore</div>
                 </div>
             </div>
         </div>
