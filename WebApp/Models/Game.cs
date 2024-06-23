@@ -35,6 +35,10 @@
             SetBoardValue(3, 4, 2);
             SetBoardValue(4, 3, 2);
             SetBoardValue(4, 4, 1);
+            SetBoardValue(0, 0, -1);
+            SetBoardValue(2, 4, -1);
+            SetBoardValue(3, 2, -1);
+            SetBoardValue(3, 5, -1);
         }
 
         private int GetBoardValue(int row, int col)
@@ -52,7 +56,7 @@
             int player = IsPlayer1Turn ? 1 : 2;
             int opponent = IsPlayer1Turn ? 2 : 1;
 
-            if (GetBoardValue(row, col) != 0 || !IsValidMove(row, col, player, opponent))
+            if (GetBoardValue(row, col) > 0 || !IsValidMove(row, col, player, opponent))
             {
                 return false;
             }

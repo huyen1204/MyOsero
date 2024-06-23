@@ -1,13 +1,12 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebApp.Services;
-using WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebApp.Models;
 
-namespace WebApp.Pages.Match
+namespace WebApp.Pages.Match2
 {
     public class IndexModel : PageModel
     {
-        
+
         public IndexModel()
         {
         }
@@ -15,7 +14,7 @@ namespace WebApp.Pages.Match
         [BindProperty]
         public Game Game { get; set; }
 
-    
+
         public void OnGet()
         {
             Game = new Game();
@@ -29,4 +28,3 @@ namespace WebApp.Pages.Match
         }
     }
 }
-
