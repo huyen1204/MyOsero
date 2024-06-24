@@ -17,6 +17,7 @@ namespace WebApp.Pages.Match2
 
         public void OnGet()
         {
+            
             Game = new Game();
         }
 
