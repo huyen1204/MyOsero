@@ -227,4 +227,11 @@
             return console.error(err.toString());
         });
     }
+
+    function exitRoom() {
+        connection.on("ClientExitedRoom", (connectionId) => {
+            console.log(`Client with connection ID ${connectionId} exited the room`);
+            // Perform actions such as updating UI, removing user from participant list, etc.
+        });
+    }
 </script>

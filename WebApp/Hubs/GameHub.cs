@@ -36,5 +36,15 @@ namespace WebApp.Hubs
             await Clients.Caller.SendAsync("UpdateGame", _game);
             await base.OnConnectedAsync();
         }
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            // Get the client connection ID
+            var connectionId = Context.ConnectionId;
+
+            // Broadcast to all clients except the one that disconnected
+            await Clients.Others.SendAsync("ClientExitedRoom", connectionId);
+
+            await base.OnDisconnectedAsync(exception);
+        }
     }
 }
