@@ -18,7 +18,7 @@
 
 
     .cell-form {
-        display: flex; /* Use flexbox for form layout */
+        /* display: flex; /* Use flexbox for form layout */ */
         justify-content: center; /* Center content horizontally */
         align-items: center; /* Center content vertically */
         height: 100%; /* Make form take full height of the td */
@@ -29,27 +29,26 @@
 
     .cell-td {
         border: 1px solid black; /* Thicker border */
-        background-color:darkgreen;
+        background-color: darkgreen;
         width: 50px;
         height: 50px;
         vertical-align: center;
         text-align: center;
     }
-    
+
 
     .black, .white {
         border-radius: 50%;
         width: 80%;
         height: 80%;
         pointer-events: none;
-/*         align-items: center;
-        justify-content: center; */
+        /*         align-items: center;
+            justify-content: center; */
         transition: background-color 0.3s;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         display: flex; /* Use flexbox for form layout */
         justify-content: center; /* Center content horizontally */
         align-items: center; /* Center content vertically */
-
     }
 
     .black {
@@ -95,7 +94,6 @@
         align-items: center; /* Center content vertically */
     }
 
-
 </style>
 @* <div style="width:100%"> *@
 <div class="container">
@@ -103,49 +101,42 @@
         <h2>Player 1</h2>
     </div>
     <div class="column">
-        <table class="board">
-            @for (int row = 0; row < 8; row++)
-            {
-                <tr>
-                    @for (int col = 0; col < 8; col++)
-                    {
-                        var value = Model.Game.Board[row * 8 + col];
-                        <td class="cell-td">
-                            <form method="post" asp-page-handler="MakeMove" class="cell-form">
-                                <input type="hidden" name="row" value="@row" />
-                                <input type="hidden" name="col" value="@col" />
-                                <input type="hidden" asp-for="Game.IsPlayer1Turn" value="@Model.Game.IsPlayer1Turn" />
-                                @foreach (var item in Model.Game.Board)
-                                {
-                                    <input type="hidden" asp-for="Game.Board" value="@item" />
-                                }
-  
-                                @if (value == 1)
-                                {
-                                    <button class="black">
-                                        <div class="cell-last"></div>
-                                    </button>
-                                }
-                                else if (value == 2)
-                                {
-                                    <button class="white">
-                                        <div class="cell-last"></div>
-                                    </button>
-                                }
-                                else if (value == -1)
-                                {
-                                    <button id="suggestPiece" class="cell-suggest"></button>
-                                }
-                                else
-                                {
-                                    <button id="piece" type="submit" class="cell"></button>
-                                }
-                            </form>
-                        </td>
-                    }
-                </tr>
-            }
-        </table>
+        <form id="moveForm" method="post">
+            <table class="board">
+                @for (int row = 0; row < 8; row++)
+                {
+                    <tr>
+                        @for (int col = 0; col < 8; col++)
+                        {
+                            <td class="cell-td">
+                                <button class="button-cell" type="submit" formaction="?handler=MakeMove&row=@row&col=@col">
+                                    <div class="cell-form">
+                                        @if (Model.Game.Board[row * 8 + col] == 1)
+                                        {
+                                            <div class="black">
+                                            </div>
+                                        }
+                                        else if (Model.Game.Board[row * 8 + col] == 2)
+                                        {
+                                            <div class="white">
+                                            </div>
+                                        }
+                                        else if (Model.Game.Board[row * 8 + col] == -1)
+                                        {
+                                            <div id="suggestPiece" class="cell-suggest"></div>
+                                        }
+                                    </div>
+                                </button>
+                                <input type="hidden" asp-for="Game.Board" value="@Model.Game.Board[row*8 + col]" />
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+            <input type="hidden" asp-for="Game.IsPlayer1Turn" value="@Model.Game.IsPlayer1Turn" />
+            <input type="hidden" asp-for="Game.PlayerOneScore" value="@Model.Game.PlayerOneScore" />
+            <input type="hidden" asp-for="Game.PlayerTwoScore" value="@Model.Game.PlayerTwoScore" />
+        </form>
     </div>
     <div class="column">
         <h2>Player 2</h2>
@@ -187,4 +178,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
